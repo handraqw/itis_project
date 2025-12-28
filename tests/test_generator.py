@@ -63,7 +63,7 @@ class TestSearchingGenerator:
         assert 'expected_output' in test
     
     def test_searching_target_exists(self):
-        """Проверяет, что цель всегда в массиве."""
+        """Проверяет, что цель находится в массиве при корректном индексе."""
         gen = TestCaseGenerator('searching')
         tests = gen.generate(count=5, include_edge_cases=False)
         
@@ -72,7 +72,31 @@ class TestSearchingGenerator:
             target = test['target']
             expected = test['expected_output']
             
+            # Проверяем только для валидных индексов
+            assert isinstance(expected, int)
+            assert 0 <= expected < len(array)
             assert array[expected] == target
+    
+    def test_searching_output_validity(self):
+        """Проверяет валидность expected_output для поиска (включая edge cases)."""
+        gen = TestCaseGenerator('searching')
+        tests = gen.generate(count=10, include_edge_cases=True)
+        
+        for test in tests:
+            array = test['array']
+            target = test['target']
+            expected = test['expected_output']
+            
+            # expected_output должен быть либо корректным индексом, либо -1
+            assert isinstance(expected, int)
+            
+            if expected == -1:
+                # Если -1, то элемента не должно быть в массиве
+                assert target not in array
+            else:
+                # Если индекс >= 0, он должен быть корректным
+                assert 0 <= expected < len(array), f"Index {expected} out of bounds for array of length {len(array)}"
+                assert array[expected] == target, f"array[{expected}] = {array[expected]}, but target = {target}"
 
 
 class TestDataStructuresGenerator:
