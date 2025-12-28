@@ -9,12 +9,8 @@ from datetime import datetime
 # Если скрипт лежит в project/scripts/generate_tests.py, то корень - это project/
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Добавляем путь к src, если он существует, или к корню
-src_path = BASE_DIR / 'src'
-if src_path.exists():
-    sys.path.insert(0, str(src_path))
-else:
-    sys.path.insert(0, str(BASE_DIR))
+# Добавляем путь к корню проекта в sys.path ПЕРЕД импортом
+sys.path.insert(0, str(BASE_DIR))
 
 try:
     from src.generator import TestCaseGenerator
@@ -22,6 +18,8 @@ try:
 except ImportError as e:
     print(f"❌ Error importing modules: {e}")
     print(f"Current sys.path: {sys.path}")
+    print(f"BASE_DIR: {BASE_DIR}")
+    print(f"Contents of BASE_DIR: {list(BASE_DIR.iterdir())}")
     sys.exit(1)
 
 def generate_all_test_sets():
