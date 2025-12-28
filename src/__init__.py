@@ -1,14 +1,13 @@
 """
-Test Case Generator Package
-
-A tool for automatically generating test cases for various programming tasks.
-
-Example:
-    >>> from src.generator import TestCaseGenerator
-    >>> gen = TestCaseGenerator('sorting')
-    >>> tests = gen.generate(count=5, include_edge_cases=True)
-    >>> print(tests[0])
+Source package for Test Case Generator.
 """
 
-__version__ = '1.0.0'
-__author__ = 'Student 2025'
+from .generator import TestCaseGenerator
+from .utils import export_to_json, load_from_json, validate_test_cases
+
+__all__ = [
+    'TestCaseGenerator',
+    'export_to_json',
+    'load_from_json',
+    'validate_test_cases',
+]
