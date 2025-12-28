@@ -6,7 +6,7 @@ import random
 from typing import List, Dict, Any, Optional
 
 
-class CaseGenerator:
+class TestCaseGenerator:
     """
     Генератор тестовых случаев для различных типов задач.
     

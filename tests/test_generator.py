@@ -3,20 +3,20 @@ Unit tests for Test Case Generator.
 """
 
 import pytest
-from src.generator import CaseGenerator
+from src.generator import TestCaseGenerator
 
 class TestSortingGenerator:
     """Тесты для генератора сортировки."""
     
     def test_sorting_generation_count(self):
         """Проверяет, что генерируется правильное количество тестов."""
-        gen = CaseGenerator('sorting')
+        gen = TestCaseGenerator('sorting')
         tests = gen.generate(count=5, include_edge_cases=False)
         assert len(tests) == 5
     
     def test_sorting_has_required_fields(self):
         """Проверяет наличие всех требуемых полей."""
-        gen = CaseGenerator('sorting')
+        gen = TestCaseGenerator('sorting')
         tests = gen.generate(count=1, include_edge_cases=False)
         test = tests[0]
         
@@ -27,7 +27,7 @@ class TestSortingGenerator:
     
     def test_sorting_output_is_sorted(self):
         """Проверяет, что ожидаемый результат отсортирован."""
-        gen = CaseGenerator('sorting')
+        gen = TestCaseGenerator('sorting')
         tests = gen.generate(count=3, include_edge_cases=False)
         
         for test in tests:
@@ -36,7 +36,7 @@ class TestSortingGenerator:
     
     def test_sorting_with_edge_cases(self):
         """Проверяет генерирование edge cases."""
-        gen = CaseGenerator('sorting')
+        gen = TestCaseGenerator('sorting')
         tests = gen.generate(count=5, include_edge_cases=True)
         
         # Должны быть edge cases
@@ -48,13 +48,13 @@ class TestSearchingGenerator:
     
     def test_searching_generation_count(self):
         """Проверяет количество тестов."""
-        gen = CaseGenerator('searching')
+        gen = TestCaseGenerator('searching')
         tests = gen.generate(count=3, include_edge_cases=False)
         assert len(tests) == 3
     
     def test_searching_has_required_fields(self):
         """Проверяет наличие требуемых полей."""
-        gen = CaseGenerator('searching')
+        gen = TestCaseGenerator('searching')
         tests = gen.generate(count=1, include_edge_cases=False)
         test = tests[0]
         
@@ -64,7 +64,7 @@ class TestSearchingGenerator:
     
     def test_searching_target_exists(self):
         """Проверяет, что цель всегда в массиве."""
-        gen = CaseGenerator('searching')
+        gen = TestCaseGenerator('searching')
         tests = gen.generate(count=5, include_edge_cases=False)
         
         for test in tests:
@@ -80,13 +80,13 @@ class TestDataStructuresGenerator:
     
     def test_data_struct_generation_count(self):
         """Проверяет количество тестов."""
-        gen = CaseGenerator('data_structures')
+        gen = TestCaseGenerator('data_structures')
         tests = gen.generate(count=4, include_edge_cases=False)
         assert len(tests) == 4
     
     def test_data_struct_has_required_fields(self):
         """Проверяет наличие требуемых полей."""
-        gen = CaseGenerator('data_structures')
+        gen = TestCaseGenerator('data_structures')
         tests = gen.generate(count=1, include_edge_cases=False)
         test = tests[0]
         
@@ -100,13 +100,13 @@ class TestMathGenerator:
     
     def test_math_generation_count(self):
         """Проверяет количество тестов."""
-        gen = CaseGenerator('math')
+        gen = TestCaseGenerator('math')
         tests = gen.generate(count=3, include_edge_cases=False)
         assert len(tests) == 3
     
     def test_math_has_required_fields(self):
         """Проверяет наличие требуемых полей."""
-        gen = CaseGenerator('math')
+        gen = TestCaseGenerator('math')
         tests = gen.generate(count=1, include_edge_cases=False)
         test = tests[0]
         
@@ -115,18 +115,18 @@ class TestMathGenerator:
         assert 'description' in test
 
 
-class CaseGeneratorErrors:
+class TestCaseGeneratorErrors:
     """Тесты для ошибок генератора."""
     
     def test_invalid_task_type(self):
         """Проверяет обработку неверного типа задачи."""
         with pytest.raises(ValueError):
-            CaseGenerator('invalid_task')
+            TestCaseGenerator('invalid_task')
     
     def test_generator_reproducibility(self):
         """Проверяет воспроизводимость с seed."""
-        gen1 = CaseGenerator('sorting')
-        gen2 = CaseGenerator('sorting')
+        gen1 = TestCaseGenerator('sorting')
+        gen2 = TestCaseGenerator('sorting')
         
         tests1 = gen1.generate(count=3, seed=42)
         tests2 = gen2.generate(count=3, seed=42)
