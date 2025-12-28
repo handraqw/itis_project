@@ -17,7 +17,7 @@ jobs:
         python-version: ['3.8', '3.9', '3.10']
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -44,7 +44,7 @@ jobs:
 
     - name: Upload coverage to Codecov
       if: matrix.python-version == '3.9'
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         files: ./coverage.xml
 
@@ -53,7 +53,7 @@ jobs:
     if: github.event_name == 'schedule' || github.event_name == 'push'
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -81,7 +81,7 @@ jobs:
         git diff-index --quiet HEAD || (git commit -m "🤖 Auto-generated test cases" && git push)
 
     - name: Upload test data as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: generated-test-cases
         path: data/generated_tests/
